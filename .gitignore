@@ -1,0 +1,29 @@
+# Dépendances
+node_modules/
+
+# Environnement
+.env
+.env.local
+.env.*.local
+.env.facebook
+
+# MCP config (contient des tokens)
+.agents/mcp_config.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+
+# Clés de signature et builds Android locaux
+release-android/
+*.keystore
+*.jks
+signing-key-info.txt

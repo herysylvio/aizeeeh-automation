@@ -1,0 +1,31 @@
+name: Facebook Notion Auto-Publisher
+
+on:
+  schedule:
+    # Exécution automatique toutes les 15 minutes dans le Cloud GitHub
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Déclenchement manuel via l'onglet Actions
+
+jobs:
+  publish-due-posts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Exécuter la publication des posts Notion vers Facebook
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          FB_PAGE_ID_D514: ${{ secrets.FB_PAGE_ID_D514 }}
+          FB_PAGE_ACCESS_TOKEN_D514: ${{ secrets.FB_PAGE_ACCESS_TOKEN_D514 }}
+          FB_PAGE_ID_AIZEEEH: ${{ secrets.FB_PAGE_ID_AIZEEEH }}
+          FB_PAGE_ACCESS_TOKEN_AIZEEEH: ${{ secrets.FB_PAGE_ACCESS_TOKEN_AIZEEEH }}
+          DRY_RUN: 'false'
+        run: |
+          node scripts/publish-facebook-notion.js

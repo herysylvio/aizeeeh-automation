@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>AIZÉ — Dossier de Cadrage & Brief Équipe</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    @page {
+      size: A4;
+      margin: 12mm 12mm 15mm 12mm;
+      @bottom-right {
+        content: "Page " counter(page);
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      line-height: 1.45;
+      font-size: 11pt;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+      min-height: 98vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* Header & Branding */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #0284c7, #0ea5e9);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 20pt;
+      padding: 6px 14px;
+      border-radius: 10px;
+      letter-spacing: 1px;
+    }
+
+    .brand-text h1 {
+      font-size: 16pt;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.1;
+    }
+
+    .brand-text p {
+      font-size: 9pt;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    .badge-meta {
+      text-align: right;
+      font-size: 8.5pt;
+      color: #475569;
+    }
+
+    .tag-confidential {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+
+    /* Section Titles */
+    h2 {
+      font-size: 13pt;
+      font-weight: 800;
+      color: #0369a1;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-left: 4px solid #0284c7;
+      padding-left: 8px;
+    }
+
+    p.intro {
+      font-size: 10.5pt;
+      color: #334155;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    /* Infographie 1: Vision & Cartes KPI */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    .kpi-number {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0284c7;
+      margin-bottom: 2px;
+    }
+
+    .kpi-label {
+      font-size: 8.5pt;
+      color: #475569;
+      font-weight: 600;
+    }
+
+    /* Infographie 2: Rôles de l'équipe */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .team-card {
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px;
+      background: #ffffff;
+      position: relative;
+    }
+
+    .team-card.lead {
+      border-left: 5px solid #0284c7;
+      background: #f0f9ff;
+    }
+    .team-card.terrain {
+      border-left: 5px solid #16a34a;
+      background: #f0fdf4;
+    }
+    .team-card.design {
+      border-left: 5px solid #8b5cf6;
+      background: #faf5ff;
+    }
+    .team-card.renfort {
+      border-left: 5px solid #f59e0b;
+      background: #fffbeb;
+    }
+
+    .team-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .team-name {
+      font-size: 11pt;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .team-badge {
+      font-size: 7.5pt;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    .badge-blue { background: #bae6fd; color: #0369a1; }
+    .badge-green { background: #bbf7d0; color: #15803d; }
+    .badge-purple { background: #e9d5ff; color: #6b21a8; }
+    .badge-amber { background: #fef3c7; color: #b45309; }
+
+    .team-role-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .team-card ul {
+      list-style-type: none;
+      font-size: 8.5pt;
+      color: #334155;
+    }
+
+    .team-card ul li {
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .team-card ul li::before {
+      content: "•";
+      color: #0284c7;
+      font-weight: bold;
+    }
+
+    /* Infographie 3: Tableau et barres cibles */
+    .quota-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 8.5pt;
+    }
+
+    .quota-table th, .quota-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+    }
+
+    .quota-table th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #1e293b;
+    }
+
+    .bar-container {
+      background: #e2e8f0;
+      border-radius: 999px;
+      height: 8px;
+      width: 100%;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .bg-red { background: #ef4444; }
+    .bg-blue { background: #0ea5e9; }
+    .bg-green { background: #22c55e; }
+    .bg-purple { background: #a855f7; }
+
+    /* Infographie 4: Timeline du Sprint */
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .step-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px;
+      position: relative;
+    }
+
+    .step-num {
+      background: #0284c7;
+      color: white;
+      font-size: 8pt;
+      font-weight: 800;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .step-desc {
+      font-size: 8pt;
+      color: #475569;
+      line-height: 1.3;
+    }
+
+    /* Box message direct Volana */
+    .callout-box {
+      background: #fffbeb;
+      border: 1px dashed #f59e0b;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 8px;
+    }
+
+    .callout-title {
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .callout-text {
+      font-size: 8.5pt;
+      color: #78350f;
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 8pt;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="brand">
+          <div class="logo-badge">AIZÉ</div>
+          <div class="brand-text">
+            <h1>Plateforme Digitale Hyperlocale</h1>
+            <p>Moramanga, Madagascar • Lancement MVP 2026</p>
+          </div>
+        </div>
+        <div class="badge-meta">
+          <span class="tag-confidential">DOCUMENT ÉQUIPE</span><br>
+          Brief Opérationnel & Stratégique
+        </div>
+      </div>
+
+      <h2>1. Pourquoi AIZÉ ? (La Vision Commune)</h2>
+      <p class="intro">
+        À Moramanga, chercher un mécanicien fiable, savoir quelle pharmacie est ouverte la nuit, ou trouver le contact d'une coopérative de transport oblige encore à faire des allers-retours à pied ou fouiller des groupes Facebook désordonnés. <strong>AIZÉ centralise tout dans la poche des habitants</strong>, gratuitement, rapidement et sans inscription obligatoire.
+      </p>
+
+      <!-- KPI Grid -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-number">50 - 80</div>
+          <div class="kpi-label">Fiches réelles au J1</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-number">100%</div>
+          <div class="kpi-label">Numéros testés & vérifiés</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-number">0 Ar</div>
+          <div class="kpi-label">Gratuit pour les habitants</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-number">3 Clics</div>
+          <div class="kpi-label">Appel / WhatsApp direct</div>
+        </div>
+      </div>
+
+      <h2>2. Organisation & Rôles de l'Équipe (Synergie 4 Piliers)</h2>
+      <div class="team-grid">
+        <!-- Sylvio -->
+        <div class="team-card lead">
+          <div class="team-header">
+            <span class="team-name">Sylvio</span>
+            <span class="team-badge badge-blue">Ops & Lead Tech</span>
+          </div>
+          <div class="team-role-title">Pilotage, Qualité & Intégration</div>
+          <ul>
+            <li>Centralisation du fichier maître de collecte de données.</li>
+            <li>Prise en charge des contacts officiels (Mairie, Police, Hôpital).</li>
+            <li>Vérification des numéros & intégration sur la plateforme.</li>
+          </ul>
+        </div>
+
+        <!-- Déon -->
+        <div class="team-card terrain">
+          <div class="team-header">
+            <span class="team-name">Déon</span>
+            <span class="team-badge badge-green">Community Leader</span>
+          </div>
+          <div class="team-role-title">Ambassadeur Terrain & Partenaires</div>
+          <ul>
+            <li>Visites des coopératives de taxi, gares et ateliers moto/auto.</li>
+            <li>Collecte directe des contacts auprès des commerçants et snacks.</li>
+            <li>Animation de l'équipe et repérage des événements locaux à venir.</li>
+          </ul>
+        </div>
+
+        <!-- Bidy -->
+        <div class="team-card design">
+          <div class="team-header">
+            <span class="team-name">Bidy</span>
+            <span class="team-badge badge-purple">Design & Identité</span>
+          </div>
+          <div class="team-role-title">Visuels, Photos & Expérience UI</div>
+          <ul>
+            <li>Prise de photos nettes des devantures et enseignes clés.</li>
+            <li>Création des supports visuels simples pour présenter AIZÉ.</li>
+            <li>Création des badges graphiques et placeholders par catégorie.</li>
+          </ul>
+        </div>
+
+        <!-- Volana -->
+        <div class="team-card renfort">
+          <div class="team-header">
+            <span class="team-name">Volana</span>
+            <span class="team-badge badge-amber">Contributrice VIP</span>
+          </div>
+          <div class="team-role-title">Micro-collecte & Relecture Mobile</div>
+          <ul>
+            <li>Partage libre de 5 à 10 adresses de confiance de son quotidien.</li>
+            <li>Revue et test de l'application mobile en avant-première.</li>
+            <li>Zéro charge lourde ni délai imposé (selon son temps disponible).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout-box">
+        <div class="callout-title">💬 Message d'onboarding doux pour Volana</div>
+        <div class="callout-text">
+          "Coucou Volana ! On lance AIZÉ, le petit annuaire mobile pratique pour Moramanga. Sachant que tu as des occupations perso en ce moment, pas de stress du tout ! On aimerait simplement te proposer, si tu as 15 min, de nous glisser tes 5 à 10 adresses ou commerces préférés en ville et tester l'appli sur ton téléphone quand elle sera prête. Zéro pression, ton retour nous fait juste super plaisir !"
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>AIZÉ Moramanga • Document Confidentiel Équipe</span>
+      <span>Page 1 / 2</span>
+    </div>
+  </div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="page">
+    <div>
+      <div class="header">
+        <div class="brand">
+          <div class="logo-badge">AIZÉ</div>
+          <div class="brand-text">
+            <h1>Plan de Bataille : 70 Fiches Terrain</h1>
+            <p>Moramanga, Madagascar • Méthodologie & Objectifs</p>
+          </div>
+        </div>
+        <div class="badge-meta">
+          <span class="tag-confidential">PLAN D'ACTION</span><br>
+          Sprint Collecte 7 Jours
+        </div>
+      </div>
+
+      <h2>3. Répartition Cible des Fiches Locales (Cible : ~70 fiches)</h2>
+      <table class="quota-table">
+        <thead>
+          <tr>
+            <th>Catégorie</th>
+            <th>Quota Cible</th>
+            <th>Priorité & Règle Métier</th>
+            <th>Progression</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Urgences & Pompiers / Police</strong></td>
+            <td>4 - 6 contacts</td>
+            <td>100% numéros officiels appelés et vérifiés</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-red" style="width: 100%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Pharmacies (Garde & Jour)</strong></td>
+            <td>4 - 6 (Toutes)</td>
+            <td>Pharmacies du centre, tableau de garde</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-red" style="width: 100%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Santé (Cabinets, Médecins, CSB)</strong></td>
+            <td>6 - 8 fiches</td>
+            <td>Médecins généralistes, dentistes, dispensaires</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-blue" style="width: 80%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Transports (Gares, Bajaj, Coopératives)</strong></td>
+            <td>8 - 12 fiches</td>
+            <td>Lignes Tana, Tamatave, Lac Alaotra, Bajaj</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-blue" style="width: 75%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Mécaniciens (Motos, Autos, Pneus)</strong></td>
+            <td>8 - 12 fiches</td>
+            <td>Ateliers moto/scooter très demandés</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-green" style="width: 70%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Restaurants, Snacks & Gargotes</strong></td>
+            <td>12 - 15 fiches</td>
+            <td>Numéro pour commander ou réserver</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-green" style="width: 65%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Hôtels & Auberges</strong></td>
+            <td>6 - 10 fiches</td>
+            <td>Axes routiers et centre-ville</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-purple" style="width: 60%;"></div></div>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Services Publics & Mairie</strong></td>
+            <td>6 - 8 fiches</td>
+            <td>Mairie, JIRAMA, Poste, Trésor</td>
+            <td>
+              <div class="bar-container"><div class="bar-fill bg-purple" style="width: 60%;"></div></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>4. Chronologie du Sprint de Collecte (7 Jours)</h2>
+      <div class="timeline">
+        <div class="step-card">
+          <div class="step-num">J1</div>
+          <div class="step-title">Lancement & Cadrage</div>
+          <div class="step-desc">Partage du Google Sheets. Prise de contact avec Volana. Validation de la taxonomie.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">J2-3</div>
+          <div class="step-title">Pôle Vital & Urgences</div>
+          <div class="step-desc">Pharmacies, hôpitaux, forces de l'ordre, services communaux. Appels de contrôle.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">J4-5</div>
+          <div class="step-title">Mobilité & Ateliers</div>
+          <div class="step-desc">Coopératives de transport, gares routières, mécaniciens motos et garages.</div>
+        </div>
+        <div class="step-card">
+          <div class="step-num">J6-7</div>
+          <div class="step-title">Commerces & Consolidation</div>
+          <div class="step-desc">Snacks, hôtels, photos par Bidy. Nettoyage des doublons avec Sylvio & injection.</div>
+        </div>
+      </div>
+
+      <h2>5. Les 4 Règles d'Or de la Qualité Locale</h2>
+      <div class="team-grid" style="margin-bottom: 0;">
+        <div class="team-card" style="border-left: 4px solid #0284c7;">
+          <div class="team-name" style="font-size: 9.5pt;">📍 Un repère physique systématique</div>
+          <p style="font-size: 8pt; color: #475569; margin-top: 3px;">
+            Les numéros de rue n'existent pas à Moramanga. Toujours préciser : <em>"en face station Shell"</em>, <em>"à 50m du pont"</em>.
+          </p>
+        </div>
+        <div class="team-card" style="border-left: 4px solid #16a34a;">
+          <div class="team-name" style="font-size: 9.5pt;">📞 Des numéros qui sonnent</div>
+          <p style="font-size: 8pt; color: #475569; margin-top: 3px;">
+            Un numéro mort tue la réputation de l'application. On teste chaque numéro avant de marquer la fiche comme validée.
+          </p>
+        </div>
+        <div class="team-card" style="border-left: 4px solid #f59e0b;">
+          <div class="team-name" style="font-size: 9.5pt;">🚫 Zéro invention de données</div>
+          <p style="font-size: 8pt; color: #475569; margin-top: 3px;">
+            Si les horaires exacts ne sont pas sûrs, marquer <em>"Non renseigné"</em> plutôt que d'inventer une fausse ouverture.
+          </p>
+        </div>
+        <div class="team-card" style="border-left: 4px solid #8b5cf6;">
+          <div class="team-name" style="font-size: 9.5pt;">🤝 Bienveillance et accord verbal</div>
+          <p style="font-size: 8pt; color: #475569; margin-top: 3px;">
+            Toujours expliquer au commerçant qu'AIZÉ le rend visible gratuitement pour lui apporter des clients locaux.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>AIZÉ Moramanga • Document Confidentiel Équipe</span>
+      <span>Page 2 / 2</span>
+    </div>
+  </div>
+
+</body>
+</html>

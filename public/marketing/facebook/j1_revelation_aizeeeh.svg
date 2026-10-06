@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+      <defs>
+        <linearGradient id="bgGradReveal" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0a1931" />
+          <stop offset="100%" stop-color="#112548" />
+        </linearGradient>
+        <filter id="shadow3" x="-10%" y="-10%" width="120%" height="120%">
+          <feDropShadow dx="0" dy="20" stdDeviation="28" flood-color="#000000" flood-opacity="0.6" />
+        </filter>
+      </defs>
+
+      <rect width="1080" height="1080" fill="url(#bgGradReveal)" />
+
+      <!-- Cercles de rayonnement -->
+      <circle cx="540" cy="460" r="360" fill="#ff6b6b" opacity="0.04" />
+      <circle cx="540" cy="460" r="260" fill="#ff6b6b" opacity="0.08" />
+
+      <!-- Header -->
+      <g transform="translate(540, 110)">
+        <text x="0" y="0" fill="#ffeac1" font-family="system-ui, -apple-system, sans-serif" font-weight="bold" font-size="24" text-anchor="middle" letter-spacing="4">DIGITAL 514 PRESENTE</text>
+      </g>
+
+      <!-- Logo Central AIZEEEH -->
+      <g transform="translate(540, 460)" filter="url(#shadow3)">
+        <!-- Carte Blanche Éclatante -->
+        <rect x="-420" y="-220" width="840" height="440" rx="36" fill="#ffffff" />
+
+        <!-- Pin Géolocalisation Corail -->
+        <g transform="translate(0, -70)">
+          <path d="M0,-55 C30,-55 55,-30 55,0 C55,40 0,78 0,78 C0,78 -55,40 -55,0 C-55,-30 -30,-55 0,-55 Z" fill="#ff6b6b" />
+          <circle cx="0" cy="-5" r="20" fill="#ffffff" />
+        </g>
+
+        <!-- Titre Aizeeeh -->
+        <text x="0" y="80" fill="#0a1931" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="88" text-anchor="middle" letter-spacing="2">
+          Aizeeeh<tspan fill="#ff6b6b">.</tspan>
+        </text>
+
+        <!-- Slogan -->
+        <text x="0" y="140" fill="#4a5568" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="24" text-anchor="middle" letter-spacing="1">
+          L'ANNUAIRE LOCAL &amp; REPERE DE MORAMANGA
+        </text>
+      </g>
+
+      <!-- Message Lancement Demain -->
+      <g transform="translate(540, 830)">
+        <rect x="-380" y="-40" width="760" height="80" rx="40" fill="#ff6b6b" filter="url(#shadow3)" />
+        <text x="0" y="12" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="32" text-anchor="middle" letter-spacing="1">
+          🚀 LANCEMENT OFFICIEL DEMAIN À 10H !
+        </text>
+      </g>
+
+      <g transform="translate(540, 980)">
+        <text x="0" y="0" fill="#ffeac1" font-family="system-ui, -apple-system, sans-serif" font-weight="700" font-size="28" text-anchor="middle">
+          🌐 aizeeeh.digital514.mg
+        </text>
+      </g>
+    </svg>
