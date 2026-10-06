@@ -316,13 +316,9 @@ async function main() {
 
       const localImagePath = findLocalImageForTitle(title);
 
-      let pageId = FB_PAGE_ID_D514;
-      let pageAccessToken = FB_PAGE_ACCESS_TOKEN_D514;
-
-      if (canal.includes('AIZÉ') || canal.includes('Aizeeeh')) {
-        pageId = FB_PAGE_ID_AIZEEEH;
-        pageAccessToken = FB_PAGE_ACCESS_TOKEN_AIZEEEH;
-      }
+      // Toutes les publications passent par la Page officielle DIGITAL 514
+      const pageId = FB_PAGE_ID_D514;
+      const pageAccessToken = FB_PAGE_ACCESS_TOKEN_D514;
 
       try {
         const publishResult = await publishToFacebookPage({

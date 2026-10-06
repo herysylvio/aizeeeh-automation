@@ -1,6 +1,8 @@
 name: Facebook Notion Auto-Publisher
 
 on:
+  push:
+    branches: [ main ]
   schedule:
     # Exécution automatique toutes les 15 minutes dans le Cloud GitHub
     - cron: '*/15 * * * *'
@@ -24,8 +26,6 @@ jobs:
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           FB_PAGE_ID_D514: ${{ secrets.FB_PAGE_ID_D514 }}
           FB_PAGE_ACCESS_TOKEN_D514: ${{ secrets.FB_PAGE_ACCESS_TOKEN_D514 }}
-          FB_PAGE_ID_AIZEEEH: ${{ secrets.FB_PAGE_ID_AIZEEEH }}
-          FB_PAGE_ACCESS_TOKEN_AIZEEEH: ${{ secrets.FB_PAGE_ACCESS_TOKEN_AIZEEEH }}
           DRY_RUN: 'false'
         run: |
           node scripts/publish-facebook-notion.js
