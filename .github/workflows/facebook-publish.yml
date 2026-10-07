@@ -1,12 +1,7 @@
 name: Facebook Notion Auto-Publisher
 
 on:
-  push:
-    branches: [ main ]
-  schedule:
-    # Exécution automatique toutes les 15 minutes dans le Cloud GitHub
-    - cron: '*/15 * * * *'
-  workflow_dispatch: # Déclenchement manuel via l'onglet Actions
+  workflow_dispatch: # Déclenchement manuel de secours via l'onglet Actions
 
 jobs:
   publish-due-posts:

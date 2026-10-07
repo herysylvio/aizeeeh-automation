@@ -1,0 +1,14 @@
+{
+  "name": "aizeeeh-automation",
+  "version": "1.0.0",
+  "description": "Robot Cloud Koyeb de publication automatique Notion -> Facebook pour Aizeeeh (DIGITAL 514)",
+  "main": "scripts/koyeb-worker.js",
+  "scripts": {
+    "start": "node scripts/koyeb-worker.js",
+    "publish": "node scripts/publish-facebook-notion.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "private": true
+}
