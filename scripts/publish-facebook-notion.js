@@ -118,10 +118,13 @@ async function uploadLocalPhotoToFacebook({ pageId, accessToken, message, localI
   }, payload);
 }
 
-// 4. META GRAPH API (Publication de Post avec ou sans Visuel + Commentaire)
-async function publishToFacebookPage({ pageId, accessToken, message, link, imageUrl, localImagePath, firstComment }) {
+// 4. META GRAPH API (Publication de Post avec ou sans Visuel + Commentaire + Programmation native)
+async function publishToFacebookPage({ pageId, accessToken, message, link, imageUrl, localImagePath, firstComment, scheduledPublishUnix }) {
+  const isNativeSchedule = Boolean(scheduledPublishUnix);
+
   if (IS_DRY_RUN || !accessToken) {
     console.log(`[DRY RUN / Simulation] Publication Facebook sur Page ID: ${pageId || 'PAGE_ID_NON_DEFINI'}`);
+    if (isNativeSchedule) console.log(`- Programmation native Meta à : ${new Date(scheduledPublishUnix * 1000).toISOString()}`);
     if (localImagePath) console.log(`- Image Locale Jointe : ${localImagePath}`);
     if (imageUrl) console.log(`- Image URL Notion Jointe : ${imageUrl}`);
     console.log(`- Message : \n${message}\n`);
@@ -134,11 +137,15 @@ async function publishToFacebookPage({ pageId, accessToken, message, link, image
 
   // CAS 1 : Image hébergée sur Notion ou URL externe (Priorité 1 : ce qui est dans Notion)
   if (imageUrl) {
-    console.log(`🖼️ Publication avec l'image issue de Notion : ${imageUrl.substring(0, 80)}...`);
+    console.log(`🖼️ ${isNativeSchedule ? 'Programmation native Meta' : 'Publication immédiate'} avec l'image issue de Notion : ${imageUrl.substring(0, 80)}...`);
     const photoParams = new URLSearchParams();
     photoParams.append('url', imageUrl);
     photoParams.append('message', message);
     photoParams.append('access_token', accessToken);
+    if (isNativeSchedule) {
+      photoParams.append('published', 'false');
+      photoParams.append('scheduled_publish_time', String(scheduledPublishUnix));
+    }
 
     postRes = await requestHttps({
       hostname: 'graph.facebook.com',
@@ -167,6 +174,10 @@ async function publishToFacebookPage({ pageId, accessToken, message, link, image
     postParams.append('message', message);
     postParams.append('access_token', accessToken);
     if (link) postParams.append('link', link);
+    if (isNativeSchedule) {
+      postParams.append('published', 'false');
+      postParams.append('scheduled_publish_time', String(scheduledPublishUnix));
+    }
 
     postRes = await requestHttps({
       hostname: 'graph.facebook.com',
@@ -181,7 +192,7 @@ async function publishToFacebookPage({ pageId, accessToken, message, link, image
     targetForCommentId = postRes.data.id;
   }
 
-  console.log(`✅ Post publié sur Facebook avec succès ! ID: ${targetForCommentId}`);
+  console.log(`✅ Post ${isNativeSchedule ? 'programmé nativement sur Facebook' : 'publié sur Facebook'} avec succès ! ID: ${targetForCommentId}`);
 
   // Poster le Premier Commentaire
   if (firstComment && targetForCommentId) {
@@ -283,13 +294,17 @@ async function main() {
 
     const postDate = rawDate ? new Date(rawDate) : null;
     const isDateReached = !postDate || postDate <= now;
+    const diffMinutes = postDate ? (postDate.getTime() - now.getTime()) / (60 * 1000) : 0;
+    // Facebook autorise la programmation native entre +15 minutes et +30 jours
+    const canNativeSchedule = postDate && diffMinutes >= 15 && diffMinutes <= 30 * 24 * 60;
 
     console.log(`\n📌 [${title}] | Texte(Déon): ${texteDeon} | Design(Bidy): ${designBidy} | Validation(Statut): ${status} | Date: ${rawDate || 'N/A'}`);
 
-    // RÈGLE STRICTE : Seul le passage en "In progress" par Sylvio ET la date atteinte déclenchent la publication
-    if (status === 'In progress' && isDateReached) {
+    // RÈGLE : Si validé par Sylvio ("In progress"), on publie immédiatement si l'heure est atteinte, OU on programme nativement sur Facebook si l'heure est dans le futur (>= 15 min)
+    if (status === 'In progress' && (isDateReached || canNativeSchedule)) {
       scheduledOrDueCount++;
-      console.log(`-> 🔔 Validé par Sylvio ("In progress") & Date atteinte : Post prêt pour diffusion immédiate !`);
+      const scheduledPublishUnix = canNativeSchedule ? Math.floor(postDate.getTime() / 1000) : null;
+      console.log(`-> 🔔 Validé par Sylvio ("In progress") : ${scheduledPublishUnix ? 'Programmation native sur Facebook pour ' + rawDate : 'Publication immédiate'} !`);
 
       // Récupérer le contenu des blocs (Texte + éventuel bloc image collé dans Notion)
       const blocksRes = await notionApi(`/v1/blocks/${page.id}/children`, 'GET');
@@ -328,7 +343,8 @@ async function main() {
           link: postMessage.includes('aizeeeh.digital514.mg') ? 'https://aizeeeh.digital514.mg' : undefined,
           imageUrl: notionImageUrl,
           localImagePath,
-          firstComment: firstCommentProp
+          firstComment: firstCommentProp,
+          scheduledPublishUnix
         });
 
         if (publishResult.success && !publishResult.simulated) {

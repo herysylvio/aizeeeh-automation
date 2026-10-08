@@ -1,6 +1,8 @@
 name: Facebook Notion Auto-Publisher
 
 on:
+  schedule:
+    - cron: '*/10 * * * *'
   workflow_dispatch: # Déclenchement manuel de secours via l'onglet Actions
 
 jobs:
